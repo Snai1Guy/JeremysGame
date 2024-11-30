@@ -1,0 +1,83 @@
+[gd_scene load_steps=9 format=3 uid="uid://e2lyyp2rnhvk"]
+
+[ext_resource type="Script" path="res://scripts/thecreature.gd" id="1_5cp0i"]
+[ext_resource type="Texture2D" uid="uid://bi4sigemkb33o" path="res://assets/sprites/The_Creature.png" id="2_ae08y"]
+[ext_resource type="PackedScene" uid="uid://crknb6p3pr4q" path="res://scenes/killzone.tscn" id="3_v4elt"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wwwdj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ae08y")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ae08y")
+}],
+"loop": true,
+"name": &"Patrol",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pyca2"]
+size = Vector2(336, 20)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sgo4h"]
+radius = 232.422
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2s7ca"]
+size = Vector2(136, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nukqj"]
+size = Vector2(140.5, 52)
+
+[node name="TheCreature" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 7
+script = ExtResource("1_5cp0i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(3.8147e-06, -2.86102e-06)
+scale = Vector2(0.191406, 0.191406)
+sprite_frames = SubResource("SpriteFrames_wwwdj")
+animation = &"Patrol"
+
+[node name="SeeingRange" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="Sight" type="CollisionShape2D" parent="SeeingRange"]
+position = Vector2(-168, 0)
+rotation = 3.14159
+shape = SubResource("RectangleShape2D_pyca2")
+debug_color = Color(0.996078, 0, 0, 0.419608)
+
+[node name="Ears" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="HearingRange" type="CollisionShape2D" parent="Ears"]
+visibility_layer = 4
+shape = SubResource("CircleShape2D_sgo4h")
+debug_color = Color(0.952941, 0, 0.560784, 0.0627451)
+
+[node name="Ray" type="RayCast2D" parent="."]
+position = Vector2(0, 20)
+target_position = Vector2(-78, 0)
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_2s7ca")
+
+[node name="Killzone" parent="." instance=ExtResource("3_v4elt")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(-1.75, -1)
+shape = SubResource("RectangleShape2D_nukqj")
+
+[connection signal="body_entered" from="SeeingRange" to="." method="_on_seeing_range_body_entered"]
+[connection signal="body_exited" from="SeeingRange" to="." method="_on_seeing_range_body_exited"]
+[connection signal="area_entered" from="Ears" to="." method="_on_ears_area_entered"]
+[connection signal="area_exited" from="Ears" to="." method="_on_ears_area_exited"]

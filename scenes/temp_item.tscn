@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://wa73pymv7vsl"]
+
+[ext_resource type="Script" path="res://scripts/temp_item.gd" id="1_6jsav"]
+[ext_resource type="Texture2D" uid="uid://bl7ghn8t1kuq4" path="res://assets/temp spirtes/Temp tiles.png" id="1_sbhk8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvlbl"]
+atlas = ExtResource("1_sbhk8")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a38hk"]
+atlas = ExtResource("1_sbhk8")
+region = Rect2(192, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shtib"]
+atlas = ExtResource("1_sbhk8")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h3q7s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bvlbl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a38hk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shtib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a38hk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d17ha"]
+radius = 14.0357
+
+[node name="Temp Item" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_6jsav")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_h3q7s")
+autoplay = "default"
+frame = 2
+frame_progress = 0.30253
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_d17ha")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

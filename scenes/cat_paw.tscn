@@ -1,0 +1,111 @@
+[gd_scene load_steps=15 format=3 uid="uid://cvaps8tru6b0p"]
+
+[ext_resource type="Script" path="res://scripts/cat_paw.gd" id="1_jv0k6"]
+[ext_resource type="Texture2D" uid="uid://1mvw8jc757f8" path="res://assets/sprites/animated sprites/Cat_Paw.png" id="1_swahc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0e48b"]
+atlas = ExtResource("1_swahc")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ww2pj"]
+atlas = ExtResource("1_swahc")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j03t1"]
+atlas = ExtResource("1_swahc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fct7o"]
+atlas = ExtResource("1_swahc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lgnm0"]
+atlas = ExtResource("1_swahc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gj4ni"]
+atlas = ExtResource("1_swahc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfmvd"]
+atlas = ExtResource("1_swahc")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inuj2"]
+atlas = ExtResource("1_swahc")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c00kf"]
+atlas = ExtResource("1_swahc")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0k1u"]
+atlas = ExtResource("1_swahc")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_56vat"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0e48b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ww2pj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j03t1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fct7o")
+}],
+"loop": false,
+"name": &"fade_in",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lgnm0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gj4ni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfmvd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inuj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c00kf")
+}],
+"loop": false,
+"name": &"fade_out",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d0k1u")
+}],
+"loop": false,
+"name": &"hidden",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6xx0q"]
+radius = 62.2013
+
+[node name="cat_paw" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_jv0k6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_56vat")
+animation = &"fade_in"
+autoplay = "hidden"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6xx0q")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
